@@ -7,13 +7,22 @@ import { Book } from '../types/book';
 import { useRouter } from 'next/navigation';
 
 const Home = () => {
-  const [books, setBooks] = useState<Book[]>([]);
+  const [books, setBooks] = useState<Book[]>([
+    {
+      id: '1',
+      title: '1984',
+      author: 'George Orwell',
+      status: 'completed',
+      description: 'Dystopian novel about totalitarian regime.',
+      coverImage: '',
+    },
+  ]);
   const router = useRouter();
 
   const addBook = (book: Omit<Book, 'id'>) => {
     setBooks((prevBooks) => [
       ...prevBooks,
-      { ...book, id: (prevBooks.length + 1).toString() }, // Fix to call toString()
+      { ...book, id: (prevBooks.length + 1).toString() },
     ]);
   };
 

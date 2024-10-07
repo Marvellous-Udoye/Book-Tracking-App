@@ -1,11 +1,11 @@
-import Image from "next/image";
+import Loader from "./components/loader";
 import Home from "./pages";
 import { Suspense } from "react";
 
 export default function Homee() {
   return (
     <div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <Home />
       </Suspense>
     </div>

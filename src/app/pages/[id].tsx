@@ -1,12 +1,12 @@
-// pages/[id].tsx
-
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Book } from '../types/book';
+import Loader from '../components/loader';
 
 const BookDetails = () => {
   const router = useRouter();
-  const { id } = router.query; // Extract id from query
+  const { id } = router.query;
   const [book, setBook] = useState<Book | null>(null);
 
   // Sample data to mimic fetching from a database
@@ -17,7 +17,7 @@ const BookDetails = () => {
       author: 'George Orwell',
       status: 'completed',
       description: 'Dystopian novel about totalitarian regime.',
-      coverImage: 'https://covers.openlibrary.org/b/id/1538183-L.jpg',
+      coverImage: '',
     },
     {
       id: '2',
@@ -25,7 +25,7 @@ const BookDetails = () => {
       author: 'Aldous Huxley',
       status: 'reading',
       description: 'Dystopian novel set in a futuristic world.',
-      coverImage: 'https://covers.openlibrary.org/b/id/1966853-L.jpg',
+      coverImage: '',
     },
   ];
 
@@ -37,13 +37,25 @@ const BookDetails = () => {
   }, [id]);
 
   if (!book) {
-    return <div className="container mx-auto p-6">Loading...</div>;
+    return <div className="container mx-auto p-6"><Loader /></div>;
   }
 
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">{book.title}</h1>
-      <img src={book.coverImage} alt={book.title} className="h-64 object-cover mb-4" />
+      {book.coverImage ? (
+        <Image
+          src={book.coverImage}
+          alt={book.title}
+          width={256}
+          height={384}
+          className="object-cover mb-4"
+        />
+      ) : (
+        <div className="h-64 w-48 bg-gray-200 flex items-center justify-center mb-4">
+          <span className="text-gray-500">No cover image</span>
+        </div>
+      )}
       <p className="text-lg font-semibold">Author: {book.author}</p>
       <p className="text-sm text-gray-600">Status: {book.status}</p>
       <p className="mt-4">{book.description}</p>

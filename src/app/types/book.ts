@@ -5,5 +5,4 @@ export interface Book {
   status: 'reading' | 'to-read' | 'completed';
   description: string;
   coverImage: string;
-  rating?: number;
 }
