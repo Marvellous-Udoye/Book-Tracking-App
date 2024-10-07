@@ -15,7 +15,7 @@ const BookDetails = () => {
       id: '1',
       title: '1984',
       author: 'George Orwell',
-      status: 'completed',
+      status: 'Completed',
       description: 'Dystopian novel about totalitarian regime.',
       coverImage: '',
     },
@@ -23,21 +23,25 @@ const BookDetails = () => {
       id: '2',
       title: 'Brave New World',
       author: 'Aldous Huxley',
-      status: 'reading',
+      status: 'Reading',
       description: 'Dystopian novel set in a futuristic world.',
       coverImage: '',
     },
   ];
 
   useEffect(() => {
-    if (id) {
+    if (router.isReady && id) {
       const foundBook = booksData.find((book) => book.id === id);
       setBook(foundBook || null);
     }
-  }, [id]);
+  }, [router.isReady, id]);
 
   if (!book) {
-    return <div className="container mx-auto p-6"><Loader /></div>;
+    return (
+      <div className="container mx-auto p-6">
+        <Loader />
+      </div>
+    );
   }
 
   return (

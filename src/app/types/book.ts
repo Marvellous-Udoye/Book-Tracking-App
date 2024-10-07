@@ -2,7 +2,7 @@ export interface Book {
   id: string;
   title: string;
   author: string;
-  status: 'reading' | 'to-read' | 'completed';
+  status: 'Reading' | 'To-read' | 'Completed';
   description: string;
   coverImage: string;
 }

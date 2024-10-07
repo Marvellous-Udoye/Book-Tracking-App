@@ -12,11 +12,11 @@ const Loader = () => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      position: 'relative' as 'relative',
+      position: 'relative' as const,
     },
     h3: {
       color: 'white',
-      position: 'absolute' as 'absolute',
+      position: 'absolute' as const,
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
@@ -26,7 +26,7 @@ const Loader = () => {
       height: '190px',
       border: '1px solid transparent',
       borderRadius: '50%',
-      position: 'absolute' as 'absolute',
+      position: 'absolute' as const,
     },
     ring1: {
       borderBottom: '8px solid rgb(255, 141, 249)',

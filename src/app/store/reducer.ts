@@ -1,5 +1,5 @@
 interface Bug {
-  id: Number;
+  id: number;
   description: string;
   resolved: boolean;
 }

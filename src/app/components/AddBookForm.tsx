@@ -10,7 +10,7 @@ interface AddBookFormProps {
 const AddBookForm: React.FC<AddBookFormProps> = ({ onAddBook }) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
-  const [status, setStatus] = useState<'reading' | 'to-read' | 'completed'>('to-read');
+  const [status, setStatus] = useState<'Reading' | 'To-read' | 'Completed'>('To-read');
   const [description, setDescription] = useState('');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -21,7 +21,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ onAddBook }) => {
     // Clear form
     setTitle('');
     setAuthor('');
-    setStatus('to-read');
+    setStatus('To-read');
     setDescription('');
     setSelectedImage(null);
   };
