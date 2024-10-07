@@ -30,11 +30,11 @@ const BookDetails = () => {
   ];
 
   useEffect(() => {
-    if (router.isReady && id) {
+    if (id) {
       const foundBook = booksData.find((book) => book.id === id);
       setBook(foundBook || null);
     }
-  }, [router.isReady, id]);
+  }, [booksData, id]);
 
   if (!book) {
     return (
