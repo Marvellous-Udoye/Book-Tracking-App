@@ -5,8 +5,10 @@ import BookList from '../components/BookList';
 import AddBookForm from '../components/AddBookForm';
 import { Book } from '../types/book';
 import { useRouter } from 'next/navigation';
+import { Provider } from "react-redux";
+import store from '../store/store';
 
-const Home = () => {
+const BookApp = () => {
   const [books, setBooks] = useState<Book[]>([
     {
       id: '1',
@@ -48,18 +50,20 @@ const Home = () => {
   };
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-center text-2xl font-bold mb-6">Book Tracking App</h1>
+    <Provider store={store}>
+      <div className="container mx-auto p-6">
+        <h1 className="text-center text-2xl font-bold mb-6">Book Tracking App</h1>
 
-      <div className="mb-6">
-        <AddBookForm onAddBook={addBook} />
-      </div>
+        <div className="mb-6">
+          <AddBookForm onAddBook={addBook} />
+        </div>
 
-      <div>
-        <BookList books={books} onBookSelect={handleBookSelect} />
+        <div>
+          <BookList books={books} onBookSelect={handleBookSelect} />
+        </div>
       </div>
-    </div>
+    </Provider>
   );
 };
 
-export default Home;
+export default BookApp;

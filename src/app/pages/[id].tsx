@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Book } from '../types/book';
 import Loader from '../components/loader';
@@ -10,7 +10,7 @@ const BookDetails = () => {
   const [book, setBook] = useState<Book | null>(null);
 
   // Sample data to mimic fetching from a database
-  const booksData: Book[] = [
+  const booksData: Book[] = useMemo(() => [
     {
       id: '1',
       title: '1984',
@@ -27,7 +27,7 @@ const BookDetails = () => {
       description: 'Dystopian novel set in a futuristic world.',
       coverImage: '',
     },
-  ];
+  ], [])
 
   useEffect(() => {
     if (id) {

@@ -1,12 +1,12 @@
 import Loader from "./components/loader";
-import Home from "./pages";
+import BookApp from "./pages";
 import { Suspense } from "react";
 
-export default function Homee() {
+export default function Home() {
   return (
     <div>
       <Suspense fallback={<Loader />}>
-        <Home />
+        <BookApp />
       </Suspense>
     </div>
   );

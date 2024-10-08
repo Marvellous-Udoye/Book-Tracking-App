@@ -1,49 +1,37 @@
-// interface Bug {
-//   id: number;
-//   description: string;
-//   resolved: boolean;
-// }
+import * as actions from "./actionTypes";
 
-// interface Action {
-//   type: string;
-//   payload: {
-//     id: number;
-//     description: string;
-//   }
-// }
+interface Bug {
+  id: number;
+  description: string;
+  resolved: boolean;
+}
 
-// let lastId = 0
+interface Action {
+  type: string;
+  payload: {
+    id: number;
+    description: string;
+  }
+}
 
-// function reducer(state: Bug[] = [], action: Action) {
-//   switch (action.type) {
-//     case "bugAdded":
-//       return [
-//         ...state,
-//         {
-//           id: ++lastId,
-//           description: action.payload.description,
-//           resolved: false
-//         }
-//       ]
-//     case "bugRemoved":
-//       return state.filter((bug) => bug.id !== action.payload.id)
-//     default:
-//       return state
-//   }
-//   if (action.type === "bugAdded") {
-//     return [
-//       ...state,
-//       {
-//         id: ++lastId,
-//         description: action.payload.description,
-//         resolved: false
-//       }
-//     ]
-//   } else if (action.type === "bugRemoved") {
-//     return state.filter((bug) => bug.id !== action.payload.id)
-//   }
+let lastId = 0
 
-//   return state
-// }
+function reducer(state: Bug[] = [], action: Action) {
+  switch (action.type) {
+    case actions.BUG_ADDED:
+      return [
+        ...state,
+        {
+          id: ++lastId,
+          description: action.payload.description,
+          resolved: false
+        }
+      ]
+    case actions.BUG_REMOVED:
+      return state.filter((bug) => bug.id !== action.payload.id)
+    default:
+      return state
+  }
+}
 
-// export default reducer;
+export default reducer;
