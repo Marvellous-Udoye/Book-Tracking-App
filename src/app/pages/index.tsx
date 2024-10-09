@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BookList from '../components/BookList';
 import AddBookForm from '../components/AddBookForm';
 import { Book } from '../types/book';
@@ -50,6 +50,7 @@ const BookApp = () => {
       coverImage: '',
     },
   ]);
+
   const router = useRouter();
 
   const addBook = (book: Omit<Book, 'id'>) => {
@@ -64,17 +65,101 @@ const BookApp = () => {
     router.push(`/${id}`);
   };
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('All');
+  const [filteredBooks, setFilteredBooks] = useState<Book[]>(books);
+  const [selectedValue, setSelectedValue] = useState("All");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const options = [
+    { value: "All", label: "All" },
+    { value: "Completed", label: "Completed" },
+    { value: "Reading", label: "Reading" },
+    { value: "To-read", label: "To Read" },
+  ];
+
+  const handleSelect = (value: string) => {
+    setSelectedValue(value);
+    setStatusFilter(value);
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    let filtered = books;
+
+    // Search filtering
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (book) =>
+          book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          book.author.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Status filtering
+    if (statusFilter !== 'All') {
+      filtered = filtered.filter(
+        (book) => book.status.toLowerCase() === statusFilter.toLowerCase()
+      );
+    }
+
+    setFilteredBooks(filtered);
+  }, [searchTerm, statusFilter]);
+
   return (
     <Provider store={store}>
       <div className="container mx-auto p-0 sm:p-6">
-        {/* <h1 className="text-center text-lg sm:text-2xl font-bold mb-2 sm:mb-6">Book Tracking App</h1> */}
+        <div className='px-4 sm:px-0'>
+          {/* Search Bar */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4">
+            <input
+              type="text"
+              placeholder="Search by title or author"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="border border-[#D9D9D9] rounded-lg p-2 sm:p-3 w-full focus:outline-none focus:border-blue-600 transition-all duration-300 text-sm sm:text-base"
+            />
+          </div>
 
-        <div className="mb-6">
+          {/* Custom Dropdown */}
+          <div
+            className="border border-[#D9D9D9] rounded-lg p-2 sm:p-3 w-full flex justify-between items-center cursor-pointer"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <span className='text-sm sm:text-base'>
+              {options.find(option => option.value === selectedValue)?.label}
+            </span>
+            <span className="absolute right-3 sm:right-12 lg:right-20">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                <path d="M7 10l5 5 5-5H7z" />
+              </svg>
+            </span>
+          </div>
+
+          {/* Dropdown Options */}
+          {isOpen && (
+            <ul className="absolute border rounded-lg bg-white mt-1 w-full z-10 border-blue-600">
+              {options.map((option) => (
+                <li
+                  key={option.value}
+                  onClick={() => handleSelect(option.value)}
+                  className="p-2 hover:bg-blue-100 cursor-pointer text-sm sm:text-base"
+                >
+                  {option.label}
+                </li>
+              ))}
+            </ul>
+          )}
+
+        </div>
+        {/* Add Book Form */}
+        <div className="my-6">
           <AddBookForm onAddBook={addBook} />
         </div>
 
+        {/* Book List */}
         <div>
-          <BookList books={books} onBookSelect={handleBookSelect} />
+          <BookList books={books} filteredBooks={filteredBooks} onBookSelect={handleBookSelect} />
         </div>
       </div>
     </Provider>
