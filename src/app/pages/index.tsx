@@ -104,12 +104,12 @@ const BookApp = () => {
     }
 
     setFilteredBooks(filtered);
-  }, [searchTerm, statusFilter]);
+  }, [searchTerm, statusFilter, books]);
 
   return (
     <Provider store={store}>
-      <div className="container mx-auto p-0 sm:p-6">
-        <div className='px-4 sm:px-0'>
+      <div className="container mx-auto pt-4 sm:p-6">
+        <div className='px-4 sm:px-0 '>
           {/* Search Bar */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4">
             <input
@@ -129,7 +129,7 @@ const BookApp = () => {
             <span className='text-sm sm:text-base'>
               {options.find(option => option.value === selectedValue)?.label}
             </span>
-            <span className="absolute right-3 sm:right-12 lg:right-20">
+            <span className="absolute right-6 sm:right-12 lg:right-20">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                 <path d="M7 10l5 5 5-5H7z" />
               </svg>

@@ -1,4 +1,3 @@
-import { filter } from 'framer-motion/client';
 import { Book } from '../types/book';
 import BookCard from './BookCard';
 
