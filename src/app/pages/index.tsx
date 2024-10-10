@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import BookList from '../components/BookList';
-import AddBookForm from '../components/AddBookForm';
-import { Book } from '../types/book';
 import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import { Provider } from "react-redux";
-import store from '../store/store';
+import AddBookForm from '../components/AddBookForm';
+import BookList from '../components/BookList';
 import { bugAdded, bugResolved } from '../store/action';
+import store from '../store/store';
+import { Book } from '../types/book';
 
 const BookApp = () => {
   const unsubscribe = store.subscribe(() => {
@@ -68,14 +68,36 @@ const BookApp = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [filteredBooks, setFilteredBooks] = useState<Book[]>(books);
-  const [selectedValue, setSelectedValue] = useState("All");
+  const [selectedValue, setSelectedValue] = useState('All');
   const [isOpen, setIsOpen] = useState(false);
+  const [isAddBookClicked, setIsAddBookClicked] = useState(false);
+  const [addForm, setAddForm] = useState(true)
+
+  const handleAddBook = () => {
+    setIsAddBookClicked(!isAddBookClicked);
+    setAddForm(true);
+    setSearchTerm('');
+    setSelectedValue('All')
+  }
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setIsAddBookClicked(true);
+    setAddForm(false);
+  }
+
+  const handleFilterChange: React.MouseEventHandler<HTMLDivElement> = () => {
+    setIsOpen(!isOpen);
+    setIsAddBookClicked(true);
+    setAddForm(false);
+  };
+
 
   const options = [
     { value: "All", label: "All" },
-    { value: "Completed", label: "Completed" },
-    { value: "Reading", label: "Reading" },
     { value: "To-read", label: "To Read" },
+    { value: "Reading", label: "Reading" },
+    { value: "Completed", label: "Completed" },
   ];
 
   const handleSelect = (value: string) => {
@@ -109,14 +131,14 @@ const BookApp = () => {
   return (
     <Provider store={store}>
       <div className="container mx-auto pt-4 sm:p-6">
-        <div className='px-4 sm:px-0 '>
+        <div className='px-4 sm:px-0 mb-6'>
           {/* Search Bar */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4">
             <input
               type="text"
               placeholder="Search by title or author"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={handleSearchChange}
               className="border border-[#D9D9D9] rounded-lg p-2 sm:p-3 w-full focus:outline-none focus:border-blue-600 transition-all duration-300 text-sm sm:text-base"
             />
           </div>
@@ -124,7 +146,7 @@ const BookApp = () => {
           {/* Custom Dropdown */}
           <div
             className="border border-[#D9D9D9] rounded-lg p-2 sm:p-3 w-full flex justify-between items-center cursor-pointer"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={handleFilterChange}
           >
             <span className='text-sm sm:text-base'>
               {options.find(option => option.value === selectedValue)?.label}
@@ -138,7 +160,7 @@ const BookApp = () => {
 
           {/* Dropdown Options */}
           {isOpen && (
-            <ul className="absolute border rounded-lg bg-white mt-1 w-full z-10 border-blue-600">
+            <ul className="absolute border rounded-lg bg-white mt-1 w-[91.5%] z-10 border-blue-600">
               {options.map((option) => (
                 <li
                   key={option.value}
@@ -150,12 +172,21 @@ const BookApp = () => {
               ))}
             </ul>
           )}
+        </div>
 
-        </div>
+        {isAddBookClicked && <div className='flex justify-end mb-6'>
+          <button
+            onClick={handleAddBook}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none "
+          >
+            Add Book
+          </button>
+        </div>}
+
         {/* Add Book Form */}
-        <div className="my-6">
+        {addForm && <div className="mb-6">
           <AddBookForm onAddBook={addBook} />
-        </div>
+        </div>}
 
         {/* Book List */}
         <div>
