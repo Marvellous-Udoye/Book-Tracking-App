@@ -1,0 +1,83 @@
+[
+    {
+      "id": "1",
+      "title": "1984",
+      "author": "George Orwell",
+      "status": "Completed",
+      "description": "Dystopian novel about totalitarian regime.",
+      "coverImage": ""
+    },
+    {
+      "id": "2",
+      "title": "Brave New World",
+      "author": "Aldous Huxley",
+      "status": "Reading",
+      "description": "Dystopian novel set in a futuristic world.",
+      "coverImage": ""
+    },
+    {
+      "id": "3",
+      "title": "Faith Destroying Emperor",
+      "author": "LazySageDao",
+      "status": "To-read",
+      "description": "Dystopian novel set in a futuristic world.",
+      "coverImage": ""
+    },
+    {
+      "id": "4",
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "status": "Completed",
+      "description": "A classic of modern American literature, tackling issues of race and justice.",
+      "coverImage": ""
+    },
+    {
+      "id": "5",
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "status": "To-read",
+      "description": "A novel of wealth, class, and love in the roaring twenties.",
+      "coverImage": ""
+    },
+    {
+      "id": "6",
+      "title": "The Catcher in the Rye",
+      "author": "J.D. Salinger",
+      "status": "Completed",
+      "description": "A coming-of-age story of teenage rebellion and confusion.",
+      "coverImage": ""
+    },
+    {
+      "id": "7",
+      "title": "Sapiens: A Brief History of Humankind",
+      "author": "Yuval Noah Harari",
+      "status": "Reading",
+      "description": "An exploration of the history and impact of Homo sapiens.",
+      "coverImage": ""
+    },
+    {
+      "id": "8",
+      "title": "The Alchemist",
+      "author": "Paulo Coelho",
+      "status": "To-read",
+      "description": "A story of following one's dreams and personal growth.",
+      "coverImage": ""
+    },
+    {
+      "id": "9",
+      "title": "Atomic Habits",
+      "author": "James Clear",
+      "status": "Reading",
+      "description": "A guide to building good habits and breaking bad ones.",
+      "coverImage": ""
+    },
+    {
+      "id": "10",
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien",
+      "status": "Completed",
+      "description": "A fantasy adventure in Middle-earth, preceding 'The Lord of the Rings'.",
+      "coverImage": ""
+    }
+  ]
+  

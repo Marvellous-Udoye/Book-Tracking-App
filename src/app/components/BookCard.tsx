@@ -21,7 +21,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className="cursor-pointer border rounded-lg shadow-lg p-4 hover:shadow-xl transition-shadow"
+      className="cursor-pointer border border-[2px] rounded-lg shadow-lg p-4 hover:shadow-2xl transition-shadow"
     >
       <div className="relative h-48 w-full">
         <Image

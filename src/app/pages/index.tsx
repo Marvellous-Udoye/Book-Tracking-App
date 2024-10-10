@@ -51,6 +51,12 @@ const BookApp = () => {
     },
   ]);
 
+  // useEffect(() => {
+  //   const getFetchedData = async() => {
+  //     // const data = await response.json()
+  //   }
+  // }, [books])
+
   const router = useRouter();
 
   const addBook = (book: Omit<Book, 'id'>) => {
@@ -77,7 +83,7 @@ const BookApp = () => {
     setIsAddBookClicked(!isAddBookClicked);
     setAddForm(true);
     setSearchTerm('');
-    setSelectedValue('All')
+    setSelectedValue('All');
   }
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,7 +137,7 @@ const BookApp = () => {
   return (
     <Provider store={store}>
       <div className="container mx-auto pt-4 sm:p-6">
-        <div className='px-4 sm:px-0 mb-6'>
+        <div className='px-4 sm:px-0 mb-2 sm:mb-6'>
           {/* Search Bar */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4">
             <input
@@ -145,13 +151,13 @@ const BookApp = () => {
 
           {/* Custom Dropdown */}
           <div
-            className="border border-[#D9D9D9] rounded-lg p-2 sm:p-3 w-full flex justify-between items-center cursor-pointer"
+            className="relative border border-[#D9D9D9] rounded-lg p-2 sm:p-3 w-full flex justify-between items-center cursor-pointer"
             onClick={handleFilterChange}
           >
             <span className='text-sm sm:text-base'>
               {options.find(option => option.value === selectedValue)?.label}
             </span>
-            <span className="absolute right-6 sm:right-12 lg:right-20">
+            <span className="absolute right-2 sm:right-6">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                 <path d="M7 10l5 5 5-5H7z" />
               </svg>
@@ -174,10 +180,10 @@ const BookApp = () => {
           )}
         </div>
 
-        {isAddBookClicked && <div className='flex justify-end mb-6'>
+        {!isAddBookClicked && <div className='flex justify-end mb-2 sm:mb-6 mr-4 sm:mr-0'>
           <button
             onClick={handleAddBook}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none "
+            className="text-[12px] sm:text-base bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 sm:py-3 px-4 sm:px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none "
           >
             Add Book
           </button>
@@ -190,7 +196,7 @@ const BookApp = () => {
 
         {/* Book List */}
         <div>
-          <BookList books={books} filteredBooks={filteredBooks} onBookSelect={handleBookSelect} />
+          <BookList filteredBooks={filteredBooks} onBookSelect={handleBookSelect} />
         </div>
       </div>
     </Provider>
