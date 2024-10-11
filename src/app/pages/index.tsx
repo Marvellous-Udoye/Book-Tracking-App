@@ -76,8 +76,8 @@ const BookApp = () => {
   const [filteredBooks, setFilteredBooks] = useState<Book[]>(books);
   const [selectedValue, setSelectedValue] = useState('All');
   const [isOpen, setIsOpen] = useState(false);
-  const [isAddBookClicked, setIsAddBookClicked] = useState(false);
-  const [addForm, setAddForm] = useState(true)
+  const [isAddBookClicked, setIsAddBookClicked] = useState(true);
+  const [addForm, setAddForm] = useState(false)
 
   const handleAddBook = () => {
     setIsAddBookClicked(!isAddBookClicked);
@@ -137,6 +137,7 @@ const BookApp = () => {
   return (
     <Provider store={store}>
       <div className="container mx-auto pt-4 sm:p-6">
+
         <div className='px-4 sm:px-0 mb-2 sm:mb-6'>
           {/* Search Bar */}
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-4">
@@ -180,10 +181,10 @@ const BookApp = () => {
           )}
         </div>
 
-        {!isAddBookClicked && <div className='flex justify-end mb-2 sm:mb-6 mr-4 sm:mr-0'>
+        {isAddBookClicked && <div className='flex justify-end mb-2 sm:mb-6 mr-4 sm:mr-0'>
           <button
             onClick={handleAddBook}
-            className="text-[12px] sm:text-base bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 sm:py-3 px-4 sm:px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none "
+            className="text-[12px] sm:text-base bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 sm:px-6 rounded-lg shadow-md transition duration-300 ease-in-out focus:outline-none "
           >
             Add Book
           </button>
