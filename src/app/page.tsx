@@ -91,15 +91,15 @@ export default function Home() {
               <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">Features you&apos;ll love</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                 <div className="p-4 md:p-6 bg-white shadow-lg rounded-lg border-2">
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Add & Organize Books</h3>
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Add & organize books</h3>
                   <p className="text-gray-600 text-sm md:text-base">Easily add books to your personal library and categorize them based on genre, author, or reading status.</p>
                 </div>
                 <div className="p-4 md:p-6 bg-white shadow-lg rounded-lg border-2">
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Track Reading Progress</h3>
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Track reading progress</h3>
                   <p className="text-gray-600 text-sm md:text-base">Update your reading progress with each chapter and keep a timeline of your journey.</p>
                 </div>
                 <div className="p-4 md:p-6 bg-white shadow-lg rounded-lg border-2">
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Review & Rate</h3>
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Review & rate</h3>
                   <p className="text-gray-600 text-sm md:text-base">Share your thoughts on the books you&apos;ve read by leaving reviews and ratings for others to discover.</p>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export default function Home() {
           {/* App Screenshot Section */}
           <section className="bg-gray-100 py-12 md:py-16">
             <div className="container mx-auto text-center">
-              <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">A Glimpse Into The App</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">A glimpse into the app</h2>
               <div className="flex justify-center">
                 <Image
                   src={'/images/Screenshot 2024-10-11 054846.png'}

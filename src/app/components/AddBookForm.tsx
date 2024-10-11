@@ -21,7 +21,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ onAddBook }) => {
     // Clear form
     setTitle('');
     setAuthor('');
-    setStatus('To-read');
+    setStatus(status);
     setDescription('');
     setSelectedImage(null);
   };
@@ -130,7 +130,7 @@ const AddBookForm: React.FC<AddBookFormProps> = ({ onAddBook }) => {
           )}
 
           {/* Status */}
-          <CustomSelect />
+          <CustomSelect selected={status} setSelected={setStatus} />
 
           {/* Description */}
           <div>

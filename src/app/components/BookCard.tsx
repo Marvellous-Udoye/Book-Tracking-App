@@ -8,7 +8,7 @@ interface BookCardProps {
 }
 
 const BookCard: React.FC<BookCardProps> = ({ book, onClick }) => {
-  const [imgSrc, setImgSrc] = useState<string>('/placeholder-book-cover.jpg');
+  const [imgSrc, setImgSrc] = useState<string>('');
 
   useEffect(() => {
     if (book.coverImage && book.coverImage.startsWith('data:image')) {

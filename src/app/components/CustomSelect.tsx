@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
-const CustomSelect = () => {
-  const [selectedValue, setSelectedValue] = useState("to-read");
+interface selectProps {
+  selected: string
+  setSelected: Dispatch<SetStateAction<"Reading" | "To-read" | "Completed">>;
+}
+
+const CustomSelect = ({ selected, setSelected }: selectProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const options = [
-    { value: "to-read", label: "To Read" },
-    { value: "reading", label: "Reading" },
-    { value: "completed", label: "Completed" },
+    { value: "To-read", label: "To Read" },
+    { value: "Reading", label: "Reading" },
+    { value: "Completed", label: "Completed" },
   ];
 
-  const handleSelect = (value: string) => {
-    setSelectedValue(value);
+  const handleSelect = (value: "Reading" | "To-read" | "Completed") => {
+    setSelected(value);
     setIsOpen(false);
   };
 
@@ -24,7 +28,7 @@ const CustomSelect = () => {
         className="border border-[#D9D9D9] rounded-lg p-2 sm:p-3 w-full flex justify-between items-center cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <span className='text-sm sm:text-base'>{options.find(option => option.value === selectedValue)?.label}</span>
+        <span className='text-sm sm:text-base'>{options.find(option => option.value === selected)?.label}</span>
         <span className="absolute right-3">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
             <path d="M7 10l5 5 5-5H7z" />
@@ -39,7 +43,7 @@ const CustomSelect = () => {
           {options.map((option) => (
             <li
               key={option.value}
-              onClick={() => handleSelect(option.value)}
+              onClick={() => handleSelect(option.value as "Reading" | "To-read" | "Completed")}
               className="p-2 hover:bg-blue-100 cursor-pointer text-sm sm:text-base"
             >
               {option.label}
