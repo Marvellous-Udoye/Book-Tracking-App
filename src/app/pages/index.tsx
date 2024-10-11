@@ -8,6 +8,8 @@ import BookList from '../components/BookList';
 import { bugAdded, bugResolved } from '../store/action';
 import store from '../store/store';
 import { Book } from '../types/book';
+import useFetch from '../hooks/fetchData';
+import Loader from '../components/loader';
 
 const BookApp = () => {
   const unsubscribe = store.subscribe(() => {
@@ -24,46 +26,22 @@ const BookApp = () => {
   // store.dispatch(bugRemoved(1))
   // console.log(store.getState())
 
-  const [books, setBooks] = useState<Book[]>([
-    {
-      id: '1',
-      title: '1984',
-      author: 'George Orwell',
-      status: 'Completed',
-      description: 'Dystopian novel about totalitarian regime.',
-      coverImage: '/images/Frame 354.png',
-    },
-    {
-      id: '2',
-      title: 'Brave New World',
-      author: 'Aldous Huxley',
-      status: 'Reading',
-      description: 'Dystopian novel set in a futuristic world.',
-      coverImage: '/images/Frame 355.png',
-    },
-    {
-      id: '3',
-      title: 'Faith Destroying Emperor',
-      author: 'LazySageDao',
-      status: 'To-read',
-      description: 'Dystopian novel set in a futuristic world.',
-      coverImage: '/images/Frame 356.png',
-    },
-  ]);
 
-  // useEffect(() => {
-  //   const getFetchedData = async() => {
-  //     // const data = await response.json()
-  //   }
-  // }, [books])
+  const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('All');
+  const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
+  const [selectedValue, setSelectedValue] = useState('All');
+  const [isOpen, setIsOpen] = useState(false);
+  const [isAddBookClicked, setIsAddBookClicked] = useState(true);
+  const [addForm, setAddForm] = useState(false);
+  const { data: books, loading, error } = useFetch('/data.json');
 
   const router = useRouter();
 
+  // Function to add a new book
   const addBook = (book: Omit<Book, 'id'>) => {
-    setBooks((prevBooks) => [
-      ...prevBooks,
-      { ...book, id: (prevBooks.length + 1).toString() },
-    ]);
+    const newBook = { ...book, id: (books.length + 1).toString() };
+    setFilteredBooks((prevBooks) => [...prevBooks, newBook]);
   };
 
   const handleBookSelect = (id: string) => {
@@ -71,33 +49,24 @@ const BookApp = () => {
     router.push(`/${id}`);
   };
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('All');
-  const [filteredBooks, setFilteredBooks] = useState<Book[]>(books);
-  const [selectedValue, setSelectedValue] = useState('All');
-  const [isOpen, setIsOpen] = useState(false);
-  const [isAddBookClicked, setIsAddBookClicked] = useState(true);
-  const [addForm, setAddForm] = useState(false)
-
   const handleAddBook = () => {
     setIsAddBookClicked(!isAddBookClicked);
     setAddForm(true);
     setSearchTerm('');
     setSelectedValue('All');
-  }
+  };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setIsAddBookClicked(true);
     setAddForm(false);
-  }
+  };
 
   const handleFilterChange: React.MouseEventHandler<HTMLDivElement> = () => {
     setIsOpen(!isOpen);
     setIsAddBookClicked(true);
     setAddForm(false);
   };
-
 
   const options = [
     { value: "All", label: "All" },
@@ -113,12 +82,16 @@ const BookApp = () => {
   };
 
   useEffect(() => {
+    if (books.length === 0)
+      return
+    <p>Unable to load book</p>;
+
     let filtered = books;
 
     // Search filtering
     if (searchTerm) {
       filtered = filtered.filter(
-        (book) =>
+        (book: Book) =>
           book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           book.author.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -127,12 +100,15 @@ const BookApp = () => {
     // Status filtering
     if (statusFilter !== 'All') {
       filtered = filtered.filter(
-        (book) => book.status.toLowerCase() === statusFilter.toLowerCase()
+        (book: Book) => book.status.toLowerCase() === statusFilter.toLowerCase()
       );
     }
 
     setFilteredBooks(filtered);
   }, [searchTerm, statusFilter, books]);
+
+  if (loading) return <p><Loader /></p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <Provider store={store}>
