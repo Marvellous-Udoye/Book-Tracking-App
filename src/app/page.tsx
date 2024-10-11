@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image";
-import Link from "next/link";
 import { Suspense, useState } from "react";
 import Loader from "./components/loader";
 import BookApp from "./pages";
@@ -15,9 +14,15 @@ export default function Home() {
     setIsOpen(!isOpen);
   };
 
-  const displayAddBook = () => {
+  const displayLibrary = () => {
     setBookForm(true)
     setPage(false)
+    setIsOpen(false)
+  }
+
+  const displayPage = () => {
+    setBookForm(false)
+    setPage(true)
     setIsOpen(false)
   }
 
@@ -37,16 +42,14 @@ export default function Home() {
 
           {/* Desktop Menu */}
           <ul className="hidden md:flex space-x-6 font-bold">
-            <li>
-              <Link
-                href={'/'}
-                className="hover:text-blue-500 cursor-pointer">
-                Home
-              </Link>
+            <li
+              onClick={displayPage}
+              className="hover:text-blue-500 cursor-pointer">
+              Home
             </li>
             <li>
               <p
-                onClick={displayAddBook}
+                onClick={displayLibrary}
                 className="hover:text-blue-500 cursor-pointer">
                 Library
               </p>
@@ -56,15 +59,14 @@ export default function Home() {
 
         {/* Mobile Menu */}
         <ul className={`md:hidden ${isOpen ? 'block' : 'hidden'} mt-4 space-y-2`}>
-          <li>
-            <Link
-              href={'/'} className="block hover:bg-blue-100 px-4 py-2 cursor-pointer">
-              Home
-            </Link>
+          <li
+            onClick={displayPage}
+            className="block hover:bg-blue-100 px-4 py-2 cursor-pointer">
+            Home
           </li>
           <li>
             <p
-              onClick={displayAddBook}
+              onClick={displayLibrary}
               className="block hover:bg-blue-100 px-4 py-2 cursor-pointer">
               Library
             </p>
@@ -110,7 +112,7 @@ export default function Home() {
               <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">A Glimpse Into The App</h2>
               <div className="flex justify-center">
                 <Image
-                  src={'/images/Screenshot 2024-10-11 053132.png'}
+                  src={'/images/Screenshot 2024-10-11 054846.png'}
                   alt="App Screenshot"
                   width={500}
                   height={200}

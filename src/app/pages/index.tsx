@@ -31,7 +31,7 @@ const BookApp = () => {
       author: 'George Orwell',
       status: 'Completed',
       description: 'Dystopian novel about totalitarian regime.',
-      coverImage: '',
+      coverImage: '/images/Frame 354.png',
     },
     {
       id: '2',
@@ -39,7 +39,7 @@ const BookApp = () => {
       author: 'Aldous Huxley',
       status: 'Reading',
       description: 'Dystopian novel set in a futuristic world.',
-      coverImage: '',
+      coverImage: '/images/Frame 355.png',
     },
     {
       id: '3',
@@ -47,7 +47,7 @@ const BookApp = () => {
       author: 'LazySageDao',
       status: 'To-read',
       description: 'Dystopian novel set in a futuristic world.',
-      coverImage: '',
+      coverImage: '/images/Frame 356.png',
     },
   ]);
 
