@@ -5,31 +5,16 @@ import React, { useEffect, useState } from 'react';
 import { Provider } from "react-redux";
 import AddBookForm from '../components/AddBookForm';
 import BookList from '../components/BookList';
-import { bugAdded, bugResolved } from '../store/action';
 import store from '../store/store';
 import { Book } from '../types/book';
 import useFetch from '../hooks/fetchData';
 import Loader from '../components/loader';
 
 const BookApp = () => {
-  const unsubscribe = store.subscribe(() => {
-    // Subscribe method to notif the UI components to rerender when the store changes 
-    // console.log("Store changed", store.getState())
-  })
-
-  store.dispatch(bugAdded("Bug 1"))
-  store.dispatch(bugResolved(1))
-
-  unsubscribe() // Calling function to unsubscribe ui component from the store, so that when an action is dispatched it doesn't re-render
-
-  // Returns bug 2 and 3
-  // store.dispatch(bugRemoved(1))
-  // console.log(store.getState())
-
-
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
-  const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
+  const [allBooks, setAllBooks] = useState<Book[]>([]); // All books including added ones
+  const [filteredBooks, setFilteredBooks] = useState<Book[]>([]); // Filtered books
   const [selectedValue, setSelectedValue] = useState('All');
   const [isOpen, setIsOpen] = useState(false);
   const [isAddBookClicked, setIsAddBookClicked] = useState(true);
@@ -38,14 +23,28 @@ const BookApp = () => {
 
   const router = useRouter();
 
+  const options = [
+    { value: "All", label: "All" },
+    { value: "To-read", label: "To Read" },
+    { value: "Reading", label: "Reading" },
+    { value: "Completed", label: "Completed" },
+  ];
+
+  const handleSelect = (value: string) => {
+    setSelectedValue(value);
+    setStatusFilter(value);
+    setIsOpen(false);
+  };
+
   // Function to add a new book
   const addBook = (book: Omit<Book, 'id'>) => {
-    const newBook = { ...book, id: (books.length + 1).toString() };
-    setFilteredBooks((prevBooks) => [...prevBooks, newBook]);
+    const newBook = { ...book, id: (allBooks.length + 1).toString() };
+    const updatedBooks = [...allBooks, newBook];
+    setAllBooks(updatedBooks); // Update main list
+    setFilteredBooks(applyFilters(updatedBooks)); // Reapply filters to updated list
   };
 
   const handleBookSelect = (id: string) => {
-    console.log('Selected book ID:', id);
     router.push(`/${id}`);
   };
 
@@ -68,27 +67,9 @@ const BookApp = () => {
     setAddForm(false);
   };
 
-  const options = [
-    { value: "All", label: "All" },
-    { value: "To-read", label: "To Read" },
-    { value: "Reading", label: "Reading" },
-    { value: "Completed", label: "Completed" },
-  ];
+  const applyFilters = (booksToFilter: Book[]) => {
+    let filtered = booksToFilter;
 
-  const handleSelect = (value: string) => {
-    setSelectedValue(value);
-    setStatusFilter(value);
-    setIsOpen(false);
-  };
-
-  useEffect(() => {
-    if (books.length === 0)
-      return
-    <p>Unable to load book</p>;
-
-    let filtered = books;
-
-    // Search filtering
     if (searchTerm) {
       filtered = filtered.filter(
         (book: Book) =>
@@ -97,17 +78,29 @@ const BookApp = () => {
       );
     }
 
-    // Status filtering
     if (statusFilter !== 'All') {
       filtered = filtered.filter(
         (book: Book) => book.status.toLowerCase() === statusFilter.toLowerCase()
       );
     }
 
-    setFilteredBooks(filtered);
-  }, [searchTerm, statusFilter, books]);
+    return filtered;
+  };
 
-  if (loading) return <p><Loader /></p>;
+  useEffect(() => {
+    if (allBooks.length === 0) return;
+
+    setFilteredBooks(applyFilters(allBooks));
+  }, [searchTerm, statusFilter, allBooks]);
+
+  useEffect(() => {
+    if (books && books.length > 0) {
+      setAllBooks(books);
+      setFilteredBooks(books);
+    }
+  }, [books]);
+
+  if (loading) return <Loader />;
   if (error) return <p>{error}</p>;
 
   return (
