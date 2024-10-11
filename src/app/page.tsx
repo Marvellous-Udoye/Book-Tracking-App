@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image";
+import Link from "next/link";
 import { Suspense, useState } from "react";
 import Loader from "./components/loader";
 import BookApp from "./pages";
@@ -35,16 +36,39 @@ export default function Home() {
           </button>
 
           {/* Desktop Menu */}
-          <ul className="hidden md:flex space-x-6">
-            <li><p className="hover:text-blue-500 cursor-pointer">Home</p></li>
-            <li><p onClick={displayAddBook} className="hover:text-blue-500 cursor-pointer">Library</p></li>
+          <ul className="hidden md:flex space-x-6 font-bold">
+            <li>
+              <Link
+                href={'/'}
+                className="hover:text-blue-500 cursor-pointer">
+                Home
+              </Link>
+            </li>
+            <li>
+              <p
+                onClick={displayAddBook}
+                className="hover:text-blue-500 cursor-pointer">
+                Library
+              </p>
+            </li>
           </ul>
         </div>
 
         {/* Mobile Menu */}
         <ul className={`md:hidden ${isOpen ? 'block' : 'hidden'} mt-4 space-y-2`}>
-          <li><p className="block hover:bg-blue-100 px-4 py-2 cursor-pointer">Home</p></li>
-          <li><p onClick={displayAddBook} className="block hover:bg-blue-100 px-4 py-2 cursor-pointer">Library</p></li>
+          <li>
+            <Link
+              href={'/'} className="block hover:bg-blue-100 px-4 py-2 cursor-pointer">
+              Home
+            </Link>
+          </li>
+          <li>
+            <p
+              onClick={displayAddBook}
+              className="block hover:bg-blue-100 px-4 py-2 cursor-pointer">
+              Library
+            </p>
+          </li>
         </ul>
       </nav>
 
@@ -62,17 +86,17 @@ export default function Home() {
           {/* Features Section */}
           <section className="py-12 md:py-16">
             <div className="container mx-auto text-center">
-              <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">Features You&apos;ll Love</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">Features you&apos;ll love</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                <div className="p-4 md:p-6 bg-white shadow-md rounded-lg">
+                <div className="p-4 md:p-6 bg-white shadow-lg rounded-lg border-2">
                   <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Add & Organize Books</h3>
                   <p className="text-gray-600 text-sm md:text-base">Easily add books to your personal library and categorize them based on genre, author, or reading status.</p>
                 </div>
-                <div className="p-4 md:p-6 bg-white shadow-md rounded-lg">
+                <div className="p-4 md:p-6 bg-white shadow-lg rounded-lg border-2">
                   <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Track Reading Progress</h3>
                   <p className="text-gray-600 text-sm md:text-base">Update your reading progress with each chapter and keep a timeline of your journey.</p>
                 </div>
-                <div className="p-4 md:p-6 bg-white shadow-md rounded-lg">
+                <div className="p-4 md:p-6 bg-white shadow-lg rounded-lg border-2">
                   <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-4">Review & Rate</h3>
                   <p className="text-gray-600 text-sm md:text-base">Share your thoughts on the books you&apos;ve read by leaving reviews and ratings for others to discover.</p>
                 </div>
@@ -86,11 +110,11 @@ export default function Home() {
               <h2 className="text-2xl md:text-3xl font-bold mb-8 md:mb-12">A Glimpse Into The App</h2>
               <div className="flex justify-center">
                 <Image
-                  src={'/path-to-image.png'}
+                  src={'/images/Screenshot 2024-10-11 053132.png'}
                   alt="App Screenshot"
                   width={500}
-                  height={500}
-                  className="rounded-lg shadow-lg w-full md:w-2/3"
+                  height={200}
+                  className="rounded-2xl shadow-lg w-full md:w-2/3"
                 />
               </div>
             </div>
